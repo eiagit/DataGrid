@@ -1,4 +1,4 @@
-const dgDados={
+const dgDados={ 
     destino : 'divDbGrid',
     local   : 'pt-br'    ,
     moeda   : 'BRL'      ,

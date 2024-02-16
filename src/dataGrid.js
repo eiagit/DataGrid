@@ -9,7 +9,6 @@
 //************************************//
 
 class DataGrid {
-
     static campoRetorno = undefined;
     static titulo = undefined;
     static grid = undefined;

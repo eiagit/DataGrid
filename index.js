@@ -1,4 +1,4 @@
-import { DataGrid } from "./src/dataGrid.js";
+import { DataGrid } from "./src/dataGrid.js"; 
 const divBase = document.querySelector('#divBase')
 const divParte1 = document.querySelector('#divParte1')
 const divGrupo1 = document.querySelector('#divGrupo1')
