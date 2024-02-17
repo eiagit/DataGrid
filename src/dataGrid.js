@@ -19,6 +19,7 @@ class DataGrid {
         'justify-content: flex-start;' +
         'align-items: flex-start;' +
         'flex-direction: column;'
+        'background-color = white;'
     static titleStyle = 'display: flex;'
         + 'justify-content: flex-start;'
         + 'align-items: flex-start;'
@@ -270,7 +271,7 @@ class DataGrid {
             })
         }
     }
-    static hideLista = (dgDados) => {
+    static hideLista = () => {
         const doc = this.dgDestino.querySelector('#dgBase')
         if (doc) doc.remove()
     }
@@ -281,15 +282,14 @@ export { DataGrid }
 
 /*   EXEMPLO DO OBJETO DE CONFIGURAÇÃO
 const dgDados={
-    campoRetorno : undefined, // recebe os dados da linha clicada
-    destino : janelaGrid,
+    destino : 'dataGridJ',
     local   : 'pt-br'   ,
     moeda   : 'BRL'     ,
-    cor     : '#49F'    ,
     funcoes: {
-        filtro : { hide : false , campo : 1 },
-        rodape : { hide : false},
-        titulo : { hide : false , nome: 'Funçoes', width: '90px', align: 'center' },
+        "filtro" : { "hide" : false , "campo" : 1 },
+        "rodape" : { "hide" : false},
+        "titulo" : { "hide" : false , "cor"   : "#49F"},
+        "acoes"  : { "hide" : false , "titulo": "Ações", "width": "90px", "align": "center" },
         icones : {
             switch : { hide: false  , name: 'lock-open-outline', func: ()=>{toggleAtivar()}},
             edit   : { hide: false  , name: 'pencil-outline'   , func: ()=>{alterar()}},
@@ -299,10 +299,11 @@ const dgDados={
         }
     },
     campos: [
-        { campo : 'CODIGO', titulo: 'Id'                   , formato: 'g'        , width: '70px' , align: 'left', soma : false},
-        { campo : 'NOME'  , titulo: 'Nome do Produto'      , formato: 'g'        , width: '300px', align: 'left', soma : false},
-        { campo : 'PRECO1', titulo: 'Preço'                , formato: 'monetario', width: '150px', align: 'left', soma : true },
-        { campo : 'DATAUV', titulo: 'Data venda'           , formato: 'data'     , width: '150px', align: 'left', soma : false},        
+        { campo : 'FOR_ID'    , titulo: 'Id'                    , formato: 'g'   , width: '70px' , align: 'left', soma : false},
+        { campo : 'FOR_NOME'  , titulo: 'Nome Colaborador'      , formato: 'g'   , width: '300px', align: 'left', soma : false},
+        { campo : 'FOR_CNPJ'  , titulo: 'CNPJ'                , formato: 'g'   , width: '150px', align: 'left', soma : false},        
+        { campo : 'FOR_STANOM', titulo: 'Status'                , formato: 'g'   , width: '150px', align: 'left', soma : false},
+
     ]
 }
 */
