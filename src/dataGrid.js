@@ -19,7 +19,7 @@ class DataGrid {
         'justify-content: flex-start;' +
         'align-items: flex-start;' +
         'flex-direction: column;'
-        'background-color = white;'
+        'background-color : white;'
     static titleStyle = 'display: flex;'
         + 'justify-content: flex-start;'
         + 'align-items: flex-start;'
