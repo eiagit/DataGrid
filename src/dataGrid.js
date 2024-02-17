@@ -69,6 +69,8 @@ class DataGrid {
 
         const stylelinha = '.dgvLinha:nth-child(odd){' +
             'background-color: rgb(241, 241, 241);}' +
+            '.dgvLinha:nth-child(even){' +
+            'background-color: rgb(255, 255, 255);}' +            
             '.dgvLinha:hover{' +
             'background-color: rgb(223, 223, 233);' +
             'cursor: pointer;}' +
