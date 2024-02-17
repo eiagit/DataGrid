@@ -270,7 +270,7 @@ class DataGrid {
         }
     }
     static hideLista = (dgDados) => {
-        const doc = dgDados.destino.querySelector('#dgBase')
+        const doc = dgDestino.querySelector('#dgBase')
         if (doc) doc.remove()
     }
 
