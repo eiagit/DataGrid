@@ -12,6 +12,7 @@ class DataGrid {
     static campoRetorno = undefined;
     static titulo = undefined;
     static grid = undefined;
+    static dgDestino = undefined
     static titulo = 'Janela Grid View';
     static dgDados = undefined;
     static baseStyle = 'display: flex;' +
@@ -56,8 +57,8 @@ class DataGrid {
         + 'background-color : rgb(223,223,233)'
     static criaLista = (dgDados, dgData) => {
         this.dgDados = dgDados
-        const dgDestino = document.querySelector('#'+dgDados.destino)
-        const doc = dgDestino.querySelector('#dgBase')
+        this.dgDestino = document.querySelector('#'+dgDados.destino)
+        const doc = this.dgDestino.querySelector('#dgBase')
         if (doc) doc.remove()
         const documento = document.head
         const scriptIcons = document.createElement('script')
@@ -81,7 +82,7 @@ class DataGrid {
         base.setAttribute('id', 'dgBase');
         base.setAttribute('class', 'dgBase');
         base.setAttribute('style', this.baseStyle)
-        dgDestino.appendChild(base);
+        this.dgDestino.appendChild(base);
 
         if (!dgDados.funcoes.filtro.hide) {
             const filtro = document.createElement('DIV');
@@ -236,7 +237,7 @@ class DataGrid {
                 }
             })
         }
-        this.grid = dgDestino.querySelector('#dgData').children
+        this.grid = this.dgDestino.querySelector('#dgData').children
         if (!dgDados.funcoes.filtro.hide) {
             inputFiltro.style.width=(dgBaseWidth/2)+'px'
             const filtroLinhas = [].slice.call(this.grid)
@@ -270,7 +271,7 @@ class DataGrid {
         }
     }
     static hideLista = (dgDados) => {
-        const doc = dgDestino.querySelector('#dgBase')
+        const doc = this.dgDestino.querySelector('#dgBase')
         if (doc) doc.remove()
     }
 
