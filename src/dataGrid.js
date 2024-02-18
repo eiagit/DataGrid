@@ -280,7 +280,7 @@ class DataGrid {
         if (doc) doc.remove()
     }
     static refreshLista = () => {
-        const doc = this.dgDestino.querySelector('#divBaseJanela')
+        const doc = this.dgDestino.querySelector('#dgBase')
         if(doc)doc.remove()
          this.hideLista()
          this.criaLista(this.dgDados,this.dgData)
