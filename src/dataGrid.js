@@ -15,6 +15,7 @@ class DataGrid {
     static dgDestino = undefined
     static titulo = 'Janela Grid View';
     static dgDados = undefined;
+    static dgData = undefined;
     static baseStyle = 'display: flex;' +
         'justify-content: flex-start;' +
         'align-items: flex-start;' +
@@ -58,6 +59,7 @@ class DataGrid {
         + 'background-color : rgb(223,223,233)'
     static criaLista = (dgDados, dgData) => {
         this.dgDados = dgDados
+        this.dgData = dgData
         this.dgDestino = document.querySelector('#'+dgDados.destino)
         const doc = this.dgDestino.querySelector('#dgBase')
         if (doc) doc.remove()
@@ -276,6 +278,13 @@ class DataGrid {
     static hideLista = () => {
         const doc = this.dgDestino.querySelector('#dgBase')
         if (doc) doc.remove()
+    }
+    static refreshLista = () => {
+        const doc = this.dgDestino.querySelector('#divBaseJanela')
+        if(doc)doc.remove()
+         this.hideLista()
+         this.criaLista(this.dgDados,this.dgData)
+
     }
 
 }
