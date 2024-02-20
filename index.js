@@ -250,6 +250,7 @@ const dgDados={
     local   : 'pt-br'    ,
     moeda   : 'BRL'      ,
     funcoes: {
+        grid   : { linha : ""   , cor : "black"},
         filtro : { hide : false , campo : 1 },
         rodape : { hide : false},
         titulo : { hide : false , cor   : '#49F' },
@@ -276,6 +277,7 @@ dgDados1.push('"destino" : "divDbGrid",')
 dgDados1.push('"local"   : "pt-br"    ,') 
 dgDados1.push('"moeda"   : "BRL"      ,')
 dgDados1.push('"funcoes" : {')
+dgDados1.push('    "grid"   : { "linha" : "" , "cor" : "black"},')
 dgDados1.push('    "filtro" : { "hide" : false , "campo" : 1 },')
 dgDados1.push('    "rodape" : { "hide" : false},')
 dgDados1.push('    "titulo" : { "hide" : false , "cor"   : "#49F"},')

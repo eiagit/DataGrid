@@ -16,11 +16,11 @@ class DataGrid {
     static titulo = 'Janela Grid View';
     static dgDados = undefined;
     static dgData = undefined;
-    static baseStyle = 'display: flex;' +
-        'justify-content: flex-start;' +
-        'align-items: flex-start;' +
-        'flex-direction: column;'
-        'background-color : white;'
+    static baseStyle = 'display: flex;' 
+        +' justify-content: flex-start;' 
+        +' align-items: flex-start;' 
+        +' flex-direction: column;'
+        +' background-color : white;'
     static titleStyle = 'display: flex;'
         + 'justify-content: flex-start;'
         + 'align-items: flex-start;'
@@ -29,16 +29,20 @@ class DataGrid {
         + 'border-radius: 5px 5px 0 0;'
         + 'width : 100%;'
         + 'padding:  5px 3px 5px 3px'
+
     static lineStyle = 'display: flex;'
         + 'justify-content: flex-start;'
         + 'align-items: flex-start;'
         + 'flex-direction: row;'
         + 'width : 100%;'
+        + 'padding:  0px 5px 0px  5px;'
+
     static dataStyle = 'display: flex;'
         + 'justify-content: flex-start;'
         + 'align-items: flex-start;'
         + 'flex-direction: column;'
-        + 'width : 100%'
+        + 'width : 100%;'
+        
     static rodapeStyle = 'display: flex;'
         + 'justify-content: flex-start;'
         + 'align-items: flex-start;'
@@ -46,7 +50,8 @@ class DataGrid {
         + 'background-color: rgb(206, 206, 206);'
         + 'border-radius: 0px 0px 5px 5px;'
         + 'width : 100%;'
-        + 'padding:  5px 3px 5px 3px'
+        + 'padding:  5px 3px 5px 3px;'
+
     static filtroStyle = 'display : flex;'
         + 'justify-content : center;'
         + 'align-itens : center;'
@@ -56,7 +61,8 @@ class DataGrid {
         + 'border-radius : 5px;'
         + 'width : 250px;'
         + 'padding : 5px;'
-        + 'background-color : rgb(223,223,233)'
+        + 'background-color : rgb(223,223,233);'
+        
     static criaLista = (dgDados, dgData) => {
         this.dgDados = dgDados
         this.dgData = dgData
@@ -77,7 +83,7 @@ class DataGrid {
             'background-color: rgb(223, 223, 233);' +
             'cursor: pointer;}' +
             '.dgvTitulos div, .dgvLinha div{' +
-            'padding:  5px 0 5px 0;}'
+            'padding:  3px 3px 3px 3px;}'
 
         const styleLinha = document.createElement('style')
         styleLinha.innerHTML += stylelinha;
@@ -129,25 +135,26 @@ class DataGrid {
         var dgBaseWidth = 0;// Largura da Base
         var somados = []; // soma
         dgHead.map((dat, id) => {
+            const fieldStyle = 'display : flex ;'
+                + 'width : ' + dat.width +' !important;'            
+                + 'align-items :flex-start !important;'
+                + 'justify-content: ' + dat.align + ';'
+                + 'padding:  3px 5px 3px 3px !important'
             const dgField = document.createElement('DIV');
             dgField.setAttribute('id', 'dgCampo' + id);
             dgField.setAttribute('class', 'dgCampo');
-            const fildStyle = 'display : flex ;'
-                + 'width : ' + dat.width + ';'
-                + 'align-items :flex-start !important;'
-                + 'justify-content: ' + dat.align + ';'
-            dgField.setAttribute('style', fildStyle);
+            dgField.setAttribute('style', fieldStyle);
+
             dgField.innerHTML = dat.titulo;
             titulo.appendChild(dgField);
-            dgBaseWidth += parseInt(dgField.style.width)
 
             const dgRodape = document.createElement('DIV');
             dgRodape.setAttribute('id', 'dgRodape' + id);
             dgRodape.setAttribute('class', 'dgCampo');
-            dgRodape.setAttribute('style', fildStyle);
-
+            dgRodape.setAttribute('style', fieldStyle);
             rodape.appendChild(dgRodape);
-
+            dgBaseWidth += parseInt(dgField.style.width)
+            //if (dat.formato.toUpperCase() == 'M') { dgField.style.marginRight='5px';dgRodape.style.marginRight='5px';dgBaseWidth += 5 }
             somados[dgRodape.id] = 0 /// cria o repositório da soma
         })
         if (!dgDados.funcoes.titulo.hide) {
@@ -163,9 +170,19 @@ class DataGrid {
                 dgFuncoesTitulo.setAttribute('style', fildStyle);
                 dgFuncoesTitulo.innerHTML = dgDados.funcoes.acoes.titulo;
                 titulo.appendChild(dgFuncoesTitulo);
+                
+                const dgFuncoesRodape = document.createElement('DIV');
+                dgFuncoesRodape.setAttribute('id', 'dgCampo-1');
+                dgFuncoesRodape.setAttribute('class', 'dgCampo');
+                dgFuncoesRodape.setAttribute('style', fildStyle);   
+                 dgFuncoesRodape.innerHTML=''
+                 rodape.appendChild(dgFuncoesRodape);
+
                 dgBaseWidth += parseInt(dgFuncoesTitulo.style.width)
+
             }
         }
+        dgBaseWidth += 10
         base.style.setProperty('width', dgBaseWidth + 'px');
         rodape.style.setProperty('width', dgBaseWidth + 'px');
         dgData.map((ele, id) => {
@@ -178,24 +195,27 @@ class DataGrid {
                 const dgDataField = document.createElement('DIV');
                 dgDataField.setAttribute('id', 'dgData' + id);
                 dgDataField.setAttribute('class', 'dgData');
-                const fieldStyle = 'display : flex ;'
-                    + 'width : ' + dgDados.campos[id].width + ';'
-                    + 'align-items :flex-start;'
-                    + 'justify-content :' + dgDados.campos[id].align + ';';
-                dgDataField.setAttribute('style', fieldStyle);
+                var fieldStyle = 'display : flex ;'
+                    + ' width : ' + chave.width + ';'
+                    + ' align-items :flex-start !important ;'
+                    + ' justify-content :' + chave.align + ';'
+                    if(dgDados.funcoes.grid.linha.toUpperCase().indexOf('V')>=0) {fieldStyle += `border-right  : 1px ${dgDados.funcoes.grid.cor} solid;`}
+                    if(dgDados.funcoes.grid.linha.toUpperCase().indexOf('H')>=0) {fieldStyle += `border-bottom : 1px ${dgDados.funcoes.grid.cor} solid;`}
 
+                dgDataField.setAttribute('style', fieldStyle);
                 var lineData = ele[chave.campo];
                 if (chave.soma) {
                     somados['dgRodape' + id] += lineData;
                 }
-                if (chave.formato == 'date') {
+                if (chave.formato.toUpperCase() == 'D') {
                     lineData = new Date(lineData)
                     lineData = `${('0' + lineData.getDate()).slice(-2)}/${('0' + (parseInt(lineData.getMonth()) + 1)).slice(-2)}/${('0000' + lineData.getFullYear()).slice(-4)}`
                 }
-                if (chave.formato == 'monetario') {
+                if (chave.formato.toUpperCase() == 'M') {
                     lineData = ele[chave.campo];
                     lineData = lineData.toLocaleString(dgDados.local, { style: 'currency', currency: dgDados.moeda });
                 }
+          //      dgDataField.style.borderRight='1px red solid'
                 dgDataField.innerHTML = lineData;
                 linha.appendChild(dgDataField);
             })
@@ -235,7 +255,7 @@ class DataGrid {
             dgHead.map((dat, id) => {
                 if (dat.soma) {
                     var lineSoma = somados['dgRodape' + id];
-                    if (dat.formato == 'monetario') {
+                    if (dat.formato.toUpperCase() == 'M') {
                         lineSoma = lineSoma.toLocaleString(dgDados.local, { style: 'currency', currency: dgDados.moeda })
                     }
                     rodape.children['dgRodape' + id].innerHTML = lineSoma
@@ -265,7 +285,7 @@ class DataGrid {
                 dgHead.map((chave, id) => { 
                     if (chave.soma) {
                         var lineData = somados['dgRodape' + id]
-                        if (chave.formato == 'monetario') {
+                        if (chave.formato.toUpperCase() == 'M') {
                             lineData = lineData.toLocaleString(dgDados.local, { style: 'currency', currency: dgDados.moeda });
                             document.querySelector('#dgRodape' + id).innerHTML=lineData
                         }else {document.querySelector('#dgRodape' + id).innerHTML=lineData}
@@ -286,7 +306,6 @@ class DataGrid {
          this.criaLista(this.dgDados,this.dgData)
 
     }
-
 }
 
 export { DataGrid }
