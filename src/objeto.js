@@ -3,10 +3,11 @@ const dgDados={
     local   : 'pt-br'    ,
     moeda   : 'BRL'      ,
     funcoes: {
-        filtro : { hide : false , campo : 1 },
-        rodape : { hide : false},
-        titulo : { hide : false , cor   : '#49F' },
-        acoes  : { hide : false , titulo: 'Ações', width: '90px', align: 'center'},
+        grid   : { linha : "H"    , cor   : "black"},
+        filtro : { hide  : false , campo  : 1 },
+        rodape : { hide  : false},
+        titulo : { hide  : false , cor    : '#49F' },
+        acoes  : { hide  : false , titulo : 'Ações', width: '90px', align: 'center'},
         icones : {
             switch : { hide: false  , name: 'lock-open-outline', func : ()=>{alert("Executa Função para switch")}},
             edit   : { hide: false  , name: 'pencil-outline'   , func : ()=>{alert("Executa Função para Editar")}},

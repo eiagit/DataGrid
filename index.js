@@ -1,5 +1,6 @@
 import { DataGrid } from "./src/dataGrid.js"; 
 const divBase = document.querySelector('#divBase')
+const divHead = document.querySelector('#divHead')
 const divParte1 = document.querySelector('#divParte1')
 const divGrupo1 = document.querySelector('#divGrupo1')
 const divParte2E= document.querySelector('#divParte2E')
@@ -264,10 +265,10 @@ const dgDados={
         }
     },
     campos: [
-        { campo : 'CODIGO', titulo: 'Id'                , formato: 'g'        , width: '70px' , align: 'left'  , soma : false},
-        { campo : 'NOME'  , titulo: 'Nome Produto'      , formato: 'g'        , width: '350px', align: 'left'  , soma : false},
-        { campo : 'PRECO1', titulo: 'Preço'             , formato: 'monetario', width: '150px', align: 'right' , soma : true },
-        { campo : 'DATAUV', titulo: 'Data Venda'        , formato: 'date'     , width: '150px', align: 'center', soma : false},
+        { campo : 'CODIGO', titulo: 'Id'                , formato: 'g' , width: '70px' , align: 'left'  , soma : false},
+        { campo : 'NOME'  , titulo: 'Nome Produto'      , formato: 'g' , width: '350px', align: 'left'  , soma : false},
+        { campo : 'PRECO1', titulo: 'Preço'             , formato: 'M' , width: '150px', align: 'right' , soma : true },
+        { campo : 'DATAUV', titulo: 'Data Venda'        , formato: 'D' , width: '150px', align: 'center', soma : false},
     ]
 }
 
@@ -291,10 +292,10 @@ dgDados1.push('"photo"  : { "hide": false  , "name": "camera-outline"   , "func"
 dgDados1.push('     }')
 dgDados1.push('},')
 dgDados1.push('"campos": [')
-dgDados1.push('{ "campo" : "CODIGO", "titulo": "Id"        , "formato": "g"        , "width": "70px" , "align": "left"  , "soma" : false},')
-dgDados1.push('{ "campo" : "NOME"  , "titulo": "Produto"   , "formato": "g"        , "width": "350px", "align": "left"  , "soma" : false},')
-dgDados1.push('{ "campo" : "PRECO1", "titulo": "Preço"     , "formato": "monetario", "width": "150px", "align": "right" , "soma" : true },')
-dgDados1.push('{ "campo" : "DATAUV", "titulo": "Data Venda", "formato": "date"     , "width": "150px", "align": "center", "soma" : false}')
+dgDados1.push('{ "campo" : "CODIGO", "titulo": "Id"        , "formato": "g" , "width": "70px" , "align": "left"  , "soma" : false},')
+dgDados1.push('{ "campo" : "NOME"  , "titulo": "Produto"   , "formato": "g" , "width": "350px", "align": "left"  , "soma" : false},')
+dgDados1.push('{ "campo" : "PRECO1", "titulo": "Preço"     , "formato": "M" , "width": "150px", "align": "right" , "soma" : true },')
+dgDados1.push('{ "campo" : "DATAUV", "titulo": "Data Venda", "formato": "D" , "width": "150px", "align": "center", "soma" : false}')
 dgDados1.push('    ]')
 dgDados1.push('}')
 h2TextArea.value=JSON.stringify(dataJson,null,4)

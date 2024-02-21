@@ -12,6 +12,13 @@
     width: 100%;
     height: 100vh;
 }
+.divHead{
+    display: flex;
+    align-items: flex-start;
+    justify-content: column;
+    width: 100%;
+    background-color: rgb(97, 110, 226);
+}
 .divParte1{
     display: flex;
     align-items: flex-start;

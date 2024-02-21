@@ -325,6 +325,7 @@ const dgDados={
     local   : 'pt-br'    ,
     moeda   : 'BRL'      ,
     funcoes: {
+        "grid"   : { "linha": "V"    , "cor"  : "Black"},
         "filtro" : { "hide" : false , "campo" : 1 },
         "rodape" : { "hide" : false},
         "titulo" : { "hide" : false , "cor"   : "#49F"},
