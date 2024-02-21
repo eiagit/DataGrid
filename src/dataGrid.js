@@ -66,7 +66,7 @@ class DataGrid {
     static criaLista = (dgDados, dgData) => {
         this.dgDados = dgDados
         this.dgData = dgData
-        this.dgDestino = document.querySelector('#'+dgDados.destino)
+        this.dgDestino = document.querySelector(dgDados.destino)
         const doc = this.dgDestino.querySelector('#dgBase')
         if (doc) doc.remove()
         const documento = document.head
@@ -321,12 +321,12 @@ export { DataGrid }
 
 /*   EXEMPLO DO OBJETO DE CONFIGURAÇÃO
 const dgDados={
-    destino : 'dataGridJ',
+    destino : '#dataGridJ',
     local   : 'pt-br'    ,
     moeda   : 'BRL'      ,
     funcoes: {
         "grid"   : { "linha": "V"    , "cor"  : "Black"},
-        "filtro" : { "hide" : false , "campo" : 1 },
+        "filtro" : { "hide" : false , "campo" : 1 ,selectHide : false},
         "rodape" : { "hide" : false},
         "titulo" : { "hide" : false , "cor"   : "#49F"},
         "acoes"  : { "hide" : false , "titulo": "Ações", "width": "90px", "align": "center" },

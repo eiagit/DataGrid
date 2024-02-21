@@ -4,10 +4,10 @@ const dgDados={
     moeda   : 'BRL'      ,
     funcoes: {
         grid   : { linha : "H"    , cor   : "black"},
-        filtro : { hide  : false , campo  : 1 },
+        filtro : { hide  : false , campo  : 1      ,selectHide : false},
         rodape : { hide  : false},
         titulo : { hide  : false , cor    : '#49F' },
-        acoes  : { hide  : false , titulo : 'Ações', width: '90px', align: 'center'},
+        acoes  : { hide  : false , titulo : 'Ações' , width: '90px', align: 'center'},
         icones : {
             switch : { hide: false  , name: 'lock-open-outline', func : ()=>{alert("Executa Função para switch")}},
             edit   : { hide: false  , name: 'pencil-outline'   , func : ()=>{alert("Executa Função para Editar")}},
