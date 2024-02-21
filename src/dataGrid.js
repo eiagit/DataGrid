@@ -55,18 +55,24 @@ class DataGrid {
     static filtroStyle = 'display : flex;'
         + 'justify-content : center;'
         + 'align-itens : center;'
-        + 'width : 100%;'
+        + 'width : 70%;'
         + 'margin-bottom : 10px;'
     static inputStyle = 'display : flex;'
         + 'border-radius : 5px;'
-        + 'width : 250px;'
+        + 'width : 60%;'
         + 'padding : 5px;'
+        + 'background-color : rgb(223,223,233);'
+    static selectStyle = 'display : flex;'
+        + 'border-radius : 5px;'
+        + 'min-width : 20%;'
+        + 'padding : 5px;'
+        + 'margin-right :5px;'
         + 'background-color : rgb(223,223,233);'
         
     static criaLista = (dgDados, dgData) => {
         this.dgDados = dgDados
         this.dgData = dgData
-        this.dgDestino = document.querySelector(dgDados.destino)
+        this.dgDestino = document.querySelector('#'+dgDados.destino)
         const doc = this.dgDestino.querySelector('#dgBase')
         if (doc) doc.remove()
         const documento = document.head
@@ -95,13 +101,40 @@ class DataGrid {
         base.setAttribute('style', this.baseStyle)
         this.dgDestino.appendChild(base);
 
-        const filtro = document.createElement('DIV');
-        filtro.setAttribute('id', 'dgFiltro');
-        filtro.setAttribute('class', 'divFiltro');
-        filtro.setAttribute('style', this.filtroStyle)
-        base.appendChild(filtro);
+        const pesNome = []
+        const pesCampo =[]
+        dgDados.campos.map((ite,id)=>{
+            pesNome.push(ite.titulo)
+            pesCampo.push(ite.campo)
+        })
+        
+
+        const filtros = document.createElement('DIV');
+        filtros.setAttribute('id', 'dgFiltro');
+        filtros.setAttribute('class', '');
+        filtros.setAttribute('style', 'display:flex ; width : 100% ; justify-content : center')
+        base.appendChild(filtros);
+
         if (!dgDados.funcoes.filtro.hide) {
 
+            var filtro = document.createElement('DIV');
+            filtro.setAttribute('id', 'dgFiltro');
+            filtro.setAttribute('class', 'divFiltro');
+            filtro.setAttribute('style', this.filtroStyle)
+            filtros.appendChild(filtro);            
+            
+            if (!dgDados.funcoes.filtro.selectHide) {
+                var inpFCampo = document.createElement('Select');
+                inpFCampo.setAttribute('id', 'SelCamPes');
+                inpFCampo.setAttribute('class', 'selectFiltro');
+                inpFCampo.setAttribute('style', this.selectStyle);
+                filtro.appendChild(inpFCampo);
+                pesNome.map((ite, id) => {
+                    var inpOCampos = document.createElement('option');
+                    inpOCampos.innerHTML = ite
+                    inpFCampo.appendChild(inpOCampos);
+                })
+            }
             const inputFiltro = document.createElement('INPUT')
             inputFiltro.setAttribute('ID', 'inputFiltro');
             inputFiltro.setAttribute('class', 'inputFiltro');
@@ -114,12 +147,12 @@ class DataGrid {
         const btnJClose = document.createElement('ion-icon');
         btnJClose.setAttribute('id', 'dgvJClose' )
         btnJClose.setAttribute('name', 'close-circle-outline')
-        btnJClose.setAttribute('style','width : 30px; cursor: pointer; height : 30px; color : '+dgDados.funcoes.titulo.cor)
+        btnJClose.setAttribute('style','display-flex ; right ;width : 30px; cursor: pointer; height : 30px; color : '+dgDados.funcoes.titulo.cor)
 
         btnJClose.addEventListener('click', (eve) => {
             base.remove()
         })
-        filtro.appendChild(btnJClose);            
+        filtros.appendChild(btnJClose);            
 
         const titulo = document.createElement('DIV');
         titulo.setAttribute('id', 'dgTitulo');
@@ -273,14 +306,16 @@ class DataGrid {
         }
         this.grid = this.dgDestino.querySelector('#dgData').children
         if (!dgDados.funcoes.filtro.hide) {
-            inputFiltro.style.width=(dgBaseWidth/2)+'px'
+            
+            
+            //inputFiltro.style.width=(dgBaseWidth/2)+'px'
             const filtroLinhas = [].slice.call(this.grid)
             inputFiltro.addEventListener('keyup', () => {
+                if(!dgDados.funcoes.filtro.selectHide){dgDados.funcoes.filtro.campo=inpFCampo.selectedIndex}                
                 dgHead.map((chave, id) => {somados['dgRodape' + id]=0})
                 filtroLinhas.map((ele, idLine) => {
-                    let eleBusca = ele.children[1].innerHTML.toUpperCase()
-                    let regex = new RegExp(inputFiltro.value.toUpperCase());
-                    if (!regex.test(eleBusca)) {
+                    let eleBusca = ele.children[dgDados.funcoes.filtro.campo].innerHTML.toUpperCase().trim()
+                    if (eleBusca.indexOf(inputFiltro.value.toUpperCase())!=0) {
                         ele.style.display = 'none'
                     } else { 
                         ele.style.display = 'flex ' 
@@ -321,12 +356,12 @@ export { DataGrid }
 
 /*   EXEMPLO DO OBJETO DE CONFIGURAÇÃO
 const dgDados={
-    destino : '#dataGridJ',
+    destino : 'dataGridJ',
     local   : 'pt-br'    ,
     moeda   : 'BRL'      ,
     funcoes: {
-        "grid"   : { "linha": "V"    , "cor"  : "Black"},
-        "filtro" : { "hide" : false , "campo" : 1 ,selectHide : false},
+        "grid"   : { "linha" : "" , "cor" : "black"},
+        "filtro" : { "hide" : false , "campo" : 1      ,selectHide : false },
         "rodape" : { "hide" : false},
         "titulo" : { "hide" : false , "cor"   : "#49F"},
         "acoes"  : { "hide" : false , "titulo": "Ações", "width": "90px", "align": "center" },
