@@ -20,7 +20,6 @@ class DataGrid {
         +' justify-content: flex-start;' 
         +' align-items: flex-start;' 
         +' flex-direction: column;'
-        +' background-color : white;'
     static titleStyle = 'display: flex;'
         + 'justify-content: flex-start;'
         + 'align-items: flex-start;'
@@ -42,6 +41,7 @@ class DataGrid {
         + 'align-items: flex-start;'
         + 'flex-direction: column;'
         + 'width : 100%;'
+        + 'background-color : white;'
         
     static rodapeStyle = 'display: flex;'
         + 'justify-content: flex-start;'
@@ -83,7 +83,7 @@ class DataGrid {
             'background-color: rgb(223, 223, 233);' +
             'cursor: pointer;}' +
             '.dgvTitulos div, .dgvLinha div{' +
-            'padding:  3px 3px 3px 3px;}'
+            'padding:  3px 5px 3px 3px;}'
 
         const styleLinha = document.createElement('style')
         styleLinha.innerHTML += stylelinha;
@@ -95,12 +95,13 @@ class DataGrid {
         base.setAttribute('style', this.baseStyle)
         this.dgDestino.appendChild(base);
 
+        const filtro = document.createElement('DIV');
+        filtro.setAttribute('id', 'dgFiltro');
+        filtro.setAttribute('class', 'divFiltro');
+        filtro.setAttribute('style', this.filtroStyle)
+        base.appendChild(filtro);
         if (!dgDados.funcoes.filtro.hide) {
-            const filtro = document.createElement('DIV');
-            filtro.setAttribute('id', 'dgFiltro');
-            filtro.setAttribute('class', 'divFiltro');
-            filtro.setAttribute('style', this.filtroStyle)
-            base.appendChild(filtro);
+
             const inputFiltro = document.createElement('INPUT')
             inputFiltro.setAttribute('ID', 'inputFiltro');
             inputFiltro.setAttribute('class', 'inputFiltro');
@@ -108,7 +109,17 @@ class DataGrid {
             inputFiltro.setAttribute('type', 'text');
             inputFiltro.setAttribute('placeholder', 'Entre com a informação para filtragem');
             filtro.appendChild(inputFiltro)
+
         }
+        const btnJClose = document.createElement('ion-icon');
+        btnJClose.setAttribute('id', 'dgvJClose' )
+        btnJClose.setAttribute('name', 'close-circle-outline')
+        btnJClose.setAttribute('style','width : 30px; cursor: pointer; height : 30px; color : '+dgDados.funcoes.titulo.cor)
+
+        btnJClose.addEventListener('click', (eve) => {
+            base.remove()
+        })
+        filtro.appendChild(btnJClose);            
 
         const titulo = document.createElement('DIV');
         titulo.setAttribute('id', 'dgTitulo');
@@ -154,7 +165,6 @@ class DataGrid {
             dgRodape.setAttribute('style', fieldStyle);
             rodape.appendChild(dgRodape);
             dgBaseWidth += parseInt(dgField.style.width)
-            //if (dat.formato.toUpperCase() == 'M') { dgField.style.marginRight='5px';dgRodape.style.marginRight='5px';dgBaseWidth += 5 }
             somados[dgRodape.id] = 0 /// cria o repositório da soma
         })
         if (!dgDados.funcoes.titulo.hide) {
@@ -215,7 +225,6 @@ class DataGrid {
                     lineData = ele[chave.campo];
                     lineData = lineData.toLocaleString(dgDados.local, { style: 'currency', currency: dgDados.moeda });
                 }
-          //      dgDataField.style.borderRight='1px red solid'
                 dgDataField.innerHTML = lineData;
                 linha.appendChild(dgDataField);
             })
@@ -313,10 +322,9 @@ export { DataGrid }
 /*   EXEMPLO DO OBJETO DE CONFIGURAÇÃO
 const dgDados={
     destino : 'dataGridJ',
-    local   : 'pt-br'   ,
-    moeda   : 'BRL'     ,
+    local   : 'pt-br'    ,
+    moeda   : 'BRL'      ,
     funcoes: {
-        "grid"   : { "linha" : "hv" , "cor" : "red"},
         "filtro" : { "hide" : false , "campo" : 1 },
         "rodape" : { "hide" : false},
         "titulo" : { "hide" : false , "cor"   : "#49F"},
