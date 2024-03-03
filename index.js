@@ -280,11 +280,11 @@ dgDados1.push('"local"   : "pt-br"    ,')
 dgDados1.push('"moeda"   : "BRL"      ,')
 dgDados1.push('"funcoes" : {')
 dgDados1.push('    "grid"   : { "linha" : "" , "cor" : "black"},')
-dgDados1.push('    "filtro" : { "hide" : false , "campo" : 1      ,"selectHide" : false},')
+dgDados1.push('    "filtro" : { "hide" : false , "campo" : 1       ,"selectHide" : false},')
 dgDados1.push('    "rodape" : { "hide" : false},')
-dgDados1.push('    "onclose": { "hide" : false , "funcao" : ()=>{}},')
-dgDados1.push('    "titulo" : { "hide" : false , "cor"   : "#49F"},')
-dgDados1.push('    "acoes"  : { "hide" : false , "titulo": "Ações", "width": "90px", "align": "center" ,clicklinha : ()=>{}},')
+dgDados1.push('    "onclose": { "hide" : false , "funcao" : "()=>{suaFuncaoAqui()}"},')
+dgDados1.push('    "titulo" : { "hide" : false , "cor"   : "#49F"} ,')
+dgDados1.push('    "acoes"  : { "hide" : false , "titulo": "Ações" , "width": "90px", "align": "center" ,"clicklinha" : "()=>{suaFuncaoAqui()}"},')
 dgDados1.push('    "icones" : {')
 dgDados1.push('"switch" : { "hide": false  , "name": "lock-open-outline", "func" : ()=>{SuaFuncao()}},')
 dgDados1.push('"edit"   : { "hide": false  , "name": "pencil-outline"   , "func" : ()=>{SuaFuncao()}},')
@@ -307,6 +307,7 @@ dgDados1.map((ele,id)=>{
 })
 btnGerar.addEventListener('click',(evt)=>{
     const h1TextJason= h1TextArea.value.replaceAll('()=>{SuaFuncao()}','""');
+    
     DataGrid.criaLista((JSON.parse(h1TextJason)),JSON.parse(h2TextArea.value))
     DataGrid.dgDados.funcoes.icones.switch.func=()=>{alert('Você clicou na função DESATIVAR, crie um funcão para executar aquilo que você que e coloque a chamada aqui. o produto que você clicou foi "'+DataGrid.campoRetorno.NOME+'" com Id = '+DataGrid.campoRetorno.CODIGO)}
     DataGrid.dgDados.funcoes.icones.edit.func=()=>{alert('Você clicou na função EDITAR, crie um funcão para executar aquilo que você que e coloque a chamada aqui. o produto que você clicou foi "'+DataGrid.campoRetorno.NOME+'"'+'" com Id = '+DataGrid.campoRetorno.CODIGO)}
