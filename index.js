@@ -247,15 +247,16 @@ const dataJson =[
     }
 ]
 const dgDados={
-    destino : 'divDbGrid',
+    destino : '#divDbGrid',
     local   : 'pt-br'    ,
     moeda   : 'BRL'      ,
     funcoes: {
         grid   : { linha : ""   , cor : "black"},
         filtro : { hide : false , campo : 1       ,selectHide : false},
         rodape : { hide : false},
+        onclose: { hide : false , funcao : ()=>{}},
         titulo : { hide : false , cor   : '#49F' },
-        acoes  : { hide : false , titulo: 'Ações' , width: '90px', align: 'center'},
+        acoes  : { hide : false , titulo: 'Ações' , width: '90px', align: 'center',clicklinha : ()=>{} },
         icones : {
             switch : { hide: false  , name: 'lock-open-outline', func : ()=>{alert("Executa Função para switch")}},
             edit   : { hide: false  , name: 'pencil-outline'   , func : ()=>{alert("Executa Função para Editar")}},
@@ -274,15 +275,16 @@ const dgDados={
 
 var dgDados1=[]
 dgDados1.push('{')
-dgDados1.push('"destino" : "divDbGrid",')
+dgDados1.push('"destino" : "#divDbGrid",')
 dgDados1.push('"local"   : "pt-br"    ,') 
 dgDados1.push('"moeda"   : "BRL"      ,')
 dgDados1.push('"funcoes" : {')
 dgDados1.push('    "grid"   : { "linha" : "" , "cor" : "black"},')
 dgDados1.push('    "filtro" : { "hide" : false , "campo" : 1      ,"selectHide" : false},')
 dgDados1.push('    "rodape" : { "hide" : false},')
+dgDados1.push('    "onclose": { "hide" : false , "funcao" : ()=>{}},')
 dgDados1.push('    "titulo" : { "hide" : false , "cor"   : "#49F"},')
-dgDados1.push('    "acoes"  : { "hide" : false , "titulo": "Ações", "width": "90px", "align": "center" },')
+dgDados1.push('    "acoes"  : { "hide" : false , "titulo": "Ações", "width": "90px", "align": "center" ,clicklinha : ()=>{}},')
 dgDados1.push('    "icones" : {')
 dgDados1.push('"switch" : { "hide": false  , "name": "lock-open-outline", "func" : ()=>{SuaFuncao()}},')
 dgDados1.push('"edit"   : { "hide": false  , "name": "pencil-outline"   , "func" : ()=>{SuaFuncao()}},')
