@@ -16,6 +16,7 @@ class DataGrid {
     static titulo = 'Janela Grid View';
     static dgDados = undefined;
     static dgData = undefined;
+    static dgBase = undefined;
     static baseStyle = 'display: flex;' 
         +' justify-content: flex-start;' 
         +' align-items: flex-start;' 
@@ -72,14 +73,19 @@ class DataGrid {
     static criaLista = (dgDados, dgData) => {
         this.dgDados = dgDados
         this.dgData = dgData
-        this.dgDestino = document.querySelector('#'+dgDados.destino)
-        const doc = this.dgDestino.querySelector('#dgBase')
-        if (doc) doc.remove()
+        this.dgDestino = document.querySelector(this.dgDados.destino)
+        const doc = document.querySelector('#dgBase')
+        if (doc!=undefined) {doc.remove()}
         const documento = document.head
         const scriptIcons = document.createElement('script')
         scriptIcons.setAttribute('type', 'module');
         scriptIcons.setAttribute('src', 'https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js')
         document.head.appendChild(scriptIcons)
+
+        const linkIcons = document.createElement('link')
+        linkIcons.setAttribute('href','https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200 ')
+        linkIcons.setAttribute('rel',"stylesheet")
+        document.head.appendChild(linkIcons)
 
         const stylelinha = '.dgvLinha:nth-child(odd){' +
             'background-color: rgb(241, 241, 241);}' +
@@ -95,11 +101,11 @@ class DataGrid {
         styleLinha.innerHTML += stylelinha;
         documento.appendChild(styleLinha)
 
-        const base = document.createElement('DIV')
-        base.setAttribute('id', 'dgBase');
-        base.setAttribute('class', 'dgBase');
-        base.setAttribute('style', this.baseStyle)
-        this.dgDestino.appendChild(base);
+        this.dgbase = document.createElement('DIV')
+        this.dgbase.setAttribute('id', 'dgBase');
+        this.dgbase.setAttribute('class', 'dgBase');
+        this.dgbase.setAttribute('style', this.baseStyle)
+        this.dgDestino.appendChild(this.dgbase);
 
         const pesNome = []
         const pesCampo =[]
@@ -108,12 +114,11 @@ class DataGrid {
             pesCampo.push(ite.campo)
         })
         
-
         const filtros = document.createElement('DIV');
         filtros.setAttribute('id', 'dgFiltro');
         filtros.setAttribute('class', '');
         filtros.setAttribute('style', 'display:flex ; width : 100% ; justify-content : center')
-        base.appendChild(filtros);
+        this.dgbase.appendChild(filtros);
 
         if (!dgDados.funcoes.filtro.hide) {
 
@@ -142,38 +147,60 @@ class DataGrid {
             inputFiltro.setAttribute('type', 'text');
             inputFiltro.setAttribute('placeholder', 'Entre com a informação para filtragem');
             filtro.appendChild(inputFiltro)
+            inputFiltro.focus()
 
         }
-        const btnJClose = document.createElement('ion-icon');
-        btnJClose.setAttribute('id', 'dgvJClose' )
-        btnJClose.setAttribute('name', 'close-circle-outline')
-        btnJClose.setAttribute('style','display-flex ; right ;width : 30px; cursor: pointer; height : 30px; color : '+dgDados.funcoes.titulo.cor)
+        if (!dgDados.funcoes.onclose.hide) {
+            
+            var bntFuncao = document.createElement('DIV');
+            bntFuncao.setAttribute('id', 'dgBtnsFuncao');
+            bntFuncao.setAttribute('class', 'divBtnFuncao');
+            bntFuncao.setAttribute('style', 'display:flex ; flex-direction:row; margin-left : 5px;')
+            filtros.appendChild(bntFuncao);            
 
-        btnJClose.addEventListener('click', (eve) => {
-            base.remove()
-        })
-        filtros.appendChild(btnJClose);            
+            const btnJClose = document.createElement('ion-icon');
+            btnJClose.setAttribute('id', 'dgvJClose')
+            btnJClose.setAttribute('name', 'close-circle-outline')
+            btnJClose.setAttribute('style', ' display-flex ; right ;width : 30px; cursor: pointer; height : 30px; color : ' + dgDados.funcoes.titulo.cor)
+            bntFuncao.appendChild(btnJClose);
+            btnJClose.addEventListener('click', (eve) => {
+                this.hideLista()
+            })
+
+            const btnRefresch = document.createElement('SPAN');
+            btnRefresch.setAttribute('class','material-symbols-outlined')
+            btnRefresch.innerHTML='Refresh'
+            btnRefresch.style='color : '+dgDados.funcoes.titulo.cor+ '; font-size : 180%;font-weight: bolder;cursor : pointer'
+            bntFuncao.appendChild(btnRefresch);
+            btnRefresch.addEventListener('click',(evt)=>{
+                 this.criaLista(dgDados,dgData)                
+            })
+
+            document.addEventListener('keyup',(evt)=>{
+                if (evt.key==='Escape') this.hideLista()
+            })            
+        }
 
         const titulo = document.createElement('DIV');
         titulo.setAttribute('id', 'dgTitulo');
         titulo.setAttribute('class', 'dgTitulo');
         titulo.setAttribute('style', this.titleStyle)
         titulo.style.backgroundColor=`${dgDados.funcoes.titulo.cor}`
-        if (!dgDados.funcoes.titulo.hide) base.appendChild(titulo);
+        if (!dgDados.funcoes.titulo.hide) this.dgbase.appendChild(titulo);
         this.titulo = titulo
 
         const dados = document.createElement('DIV');
         dados.setAttribute('id', 'dgData');
         dados.setAttribute('class', 'dgData');
         dados.setAttribute('style', this.dataStyle)
-        base.appendChild(dados);
+        this.dgbase.appendChild(dados);
 
         const rodape = document.createElement('DIV');
         rodape.setAttribute('id', 'dgRodape');
         rodape.setAttribute('class', 'dgRodape');
         rodape.setAttribute('style', this.rodapeStyle)
         rodape.style.backgroundColor=`${dgDados.funcoes.titulo.cor}`
-        if (!dgDados.funcoes.rodape.hide) base.appendChild(rodape);
+        if (!dgDados.funcoes.rodape.hide) this.dgbase.appendChild(rodape);
 
         const dgHead = dgDados.campos;
         var dgBaseWidth = 0;// Largura da Base
@@ -226,7 +253,7 @@ class DataGrid {
             }
         }
         dgBaseWidth += 10
-        base.style.setProperty('width', dgBaseWidth + 'px');
+        this.dgbase.style.setProperty('width', dgBaseWidth + 'px');
         rodape.style.setProperty('width', dgBaseWidth + 'px');
         dgData.map((ele, id) => {
             const linha = document.createElement('DIV');
@@ -234,6 +261,12 @@ class DataGrid {
             linha.setAttribute('class', 'dgvLinha');
             linha.setAttribute('style', this.lineStyle)
             dados.appendChild(linha);
+            linha.addEventListener('click',(evt)=>{
+                const campo = document.querySelector('#dgData0');
+                this.campoRetorno = ele;
+                dgDados.campoRetorno = linha.children;
+                dgDados.funcoes.acoes.clicklinha()                
+            })
             dgHead.map((chave, id) => {
                 const dgDataField = document.createElement('DIV');
                 dgDataField.setAttribute('id', 'dgData' + id);
@@ -304,14 +337,13 @@ class DataGrid {
                 }
             })
         }
-        this.grid = this.dgDestino.querySelector('#dgData').children
+        this.grid = document.querySelector('#dgData').children
         if (!dgDados.funcoes.filtro.hide) {
             
-            
-            //inputFiltro.style.width=(dgBaseWidth/2)+'px'
+            if(!dgDados.funcoes.filtro.selectHide){inpFCampo.selectedIndex=dgDados.funcoes.filtro.campo}
             const filtroLinhas = [].slice.call(this.grid)
             inputFiltro.addEventListener('keyup', () => {
-                if(!dgDados.funcoes.filtro.selectHide){dgDados.funcoes.filtro.campo=inpFCampo.selectedIndex}                
+                if(!dgDados.funcoes.filtro.selectHide){dgDados.funcoes.filtro.campo=inpFCampo.selectedIndex}
                 dgHead.map((chave, id) => {somados['dgRodape' + id]=0})
                 filtroLinhas.map((ele, idLine) => {
                     let eleBusca = ele.children[dgDados.funcoes.filtro.campo].innerHTML.toUpperCase().trim()
@@ -340,15 +372,13 @@ class DataGrid {
         }
     }
     static hideLista = () => {
-        const doc = this.dgDestino.querySelector('#dgBase')
-        if (doc) doc.remove()
+        const doc = document.querySelector('#dgBase')
+        if (doc!=undefined) dgBase.remove()
+        this.dgDados.funcoes.onclose.funcao()
+
     }
     static refreshLista = () => {
-        const doc = this.dgDestino.querySelector('#dgBase')
-        if(doc)doc.remove()
-         this.hideLista()
          this.criaLista(this.dgDados,this.dgData)
-
     }
 }
 
@@ -360,10 +390,11 @@ const dgDados={
     local   : 'pt-br'    ,
     moeda   : 'BRL'      ,
     funcoes: {
-        "grid"   : { "linha" : "" , "cor" : "black"},
-        "filtro" : { "hide" : false , "campo" : 1      ,selectHide : false },
-        "rodape" : { "hide" : false},
         "titulo" : { "hide" : false , "cor"   : "#49F"},
+        "filtro" : { "hide" : false , "campo" : 1      ,selectHide : false },
+        "onclose" : { "hide" : false , "funcao" : ()=>{dbgridFecha()}},
+        "grid"   : { "linha" : "" , "cor" : "black"},
+        "rodape" : { "hide" : false},
         "acoes"  : { "hide" : false , "titulo": "Ações", "width": "90px", "align": "center" },
         icones : {
             switch : { hide: false  , name: 'lock-open-outline', func: ()=>{toggleAtivar()}},
