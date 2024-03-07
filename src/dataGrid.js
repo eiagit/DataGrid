@@ -287,6 +287,12 @@ class DataGrid {
                     lineData = new Date(lineData)
                     lineData = `${('0' + lineData.getDate()).slice(-2)}/${('0' + (parseInt(lineData.getMonth()) + 1)).slice(-2)}/${('0000' + lineData.getFullYear()).slice(-4)}`
                 }
+                if (chave.formato.toUpperCase() == 'T') {
+                    const linehor = new  Date(lineData).getHours()
+                    const linemin = new  Date(lineData).getMinutes()
+                    const linesec = new  Date(lineData).getSeconds()
+                    lineData = `${('0'+linehor).slice(-2)}:${('0'+linemin).slice(-2)}:${('0'+linesec).slice(-2)}`
+                }                
                 if (chave.formato.toUpperCase() == 'M') {
                     lineData = ele[chave.campo];
                     lineData = lineData.toLocaleString(dgDados.local, { style: 'currency', currency: dgDados.moeda });
@@ -311,7 +317,14 @@ class DataGrid {
                     const icons = Object.keys(dgDados.funcoes.icones);
                     icons.forEach((eli) => {
                         if (!dgDados.funcoes.icones[eli].hide) {
-                            const dgvLinhaIv = document.createElement('ion-icon');
+                            if (this.dgDados.funcoes.acoes.material=='ion-icon'){
+                            var dgvLinhaIv = document.createElement('ion-icon');}
+                            if (this.dgDados.funcoes.acoes.material=='google'){
+                                var dgvLinhaIv = document.createElement('SPAN');
+                                dgvLinhaIv.setAttribute('class','material-symbols-outlined')
+                                dgvLinhaIv.innerHTML=dgDados.funcoes.icones[eli].name
+                            }
+
                             dgvLinhaIv.setAttribute('id', 'dgv' + eli)
                             dgvLinhaIv.setAttribute('name', dgDados.funcoes.icones[eli].name)
                             dgvLinhaIv.addEventListener('click', (eve) => {
@@ -391,11 +404,11 @@ const dgDados={
     moeda   : 'BRL'      ,
     funcoes: {
         "titulo" : { "hide" : false , "cor"   : "#49F"},
-        "filtro" : { "hide" : false , "campo" : 1      ,selectHide : false },
+        "filtro" : { "hide" : false , "campo" : 1      ,"selectHide" : false },
         "onclose" : { "hide" : false , "funcao" : ()=>{dbgridFecha()}},
         "grid"   : { "linha" : "" , "cor" : "black"},
         "rodape" : { "hide" : false},
-        "acoes"  : { "hide" : false , "titulo": "Ações", "width": "90px", "align": "center" },
+        "acoes"  : { "hide" : false , "titulo": "Ações", "width": "90px", "align": "center","material" : "ion-icon", "clicklinha" : ()=>{} },
         icones : {
             switch : { hide: false  , name: 'lock-open-outline', func: ()=>{toggleAtivar()}},
             edit   : { hide: false  , name: 'pencil-outline'   , func: ()=>{alterar()}},
