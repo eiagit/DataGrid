@@ -5,6 +5,7 @@
 //**   Eia_99@yahoo.com             **//
 //**   Class DataGrid.js 02/2024    **//
 //**   Vera Cruz - Itaparica Bahia  **//
+//**   Ver . 1.0.3                  **//
 //**                                **//
 //************************************//
 
@@ -349,7 +350,7 @@ class DataGrid {
                     var lineSoma = parseFloat(somados['dgRodape' + id]);
                     
                     if (dat.formato.toUpperCase() == 'M') {
-                        lineSoma = lineSoma.toLocaleString(dgDados.local, { style: 'currency', currency: dgDados.moeda })
+                        lineSoma = lineSoma.toLocaleString(dgDados.local, { style: 'currency', currency: dgDados.moeda } )
                     }
                     if (dat.formato.toUpperCase() == 'N') {
                         lineSoma = lineSoma
