@@ -281,7 +281,7 @@ class DataGrid {
                 dgDataField.setAttribute('style', fieldStyle);
                 var lineData = ele[chave.campo];
                 if (chave.soma) {
-                    somados['dgRodape' + id] += lineData;
+                    somados['dgRodape' + id] += parseFloat(lineData);
                 }
                 if (chave.formato.toUpperCase() == 'D') {
                     lineData = new Date(lineData)
@@ -293,9 +293,13 @@ class DataGrid {
                     const linesec = new  Date(lineData).getSeconds()
                     lineData = `${('0'+linehor).slice(-2)}:${('0'+linemin).slice(-2)}:${('0'+linesec).slice(-2)}`
                 }                
+                if (chave.formato.toUpperCase() == 'N') {
+                    lineData = ele[chave.campo];
+                    lineData = parseFloat(lineData);
+                }                
                 if (chave.formato.toUpperCase() == 'M') {
                     lineData = ele[chave.campo];
-                    lineData = lineData.toLocaleString(dgDados.local, { style: 'currency', currency: dgDados.moeda });
+                    lineData = parseFloat(lineData).toLocaleString(dgDados.local, { style: 'currency', currency: dgDados.moeda });
                 }
                 dgDataField.innerHTML = lineData;
                 linha.appendChild(dgDataField);
@@ -342,9 +346,13 @@ class DataGrid {
         if (!dgDados.funcoes.rodape.hide) {
             dgHead.map((dat, id) => {
                 if (dat.soma) {
-                    var lineSoma = somados['dgRodape' + id];
+                    var lineSoma = parseFloat(somados['dgRodape' + id]);
+                    
                     if (dat.formato.toUpperCase() == 'M') {
                         lineSoma = lineSoma.toLocaleString(dgDados.local, { style: 'currency', currency: dgDados.moeda })
+                    }
+                    if (dat.formato.toUpperCase() == 'N') {
+                        lineSoma = lineSoma
                     }
                     rodape.children['dgRodape' + id].innerHTML = lineSoma
                 }
@@ -375,10 +383,14 @@ class DataGrid {
                     if (chave.soma) {
                         var lineData = somados['dgRodape' + id]
                         if (chave.formato.toUpperCase() == 'M') {
-                            lineData = lineData.toLocaleString(dgDados.local, { style: 'currency', currency: dgDados.moeda });
+                            lineData = parseFloat(lineData).toLocaleString(dgDados.local, { style: 'currency', currency: dgDados.moeda });
                             document.querySelector('#dgRodape' + id).innerHTML=lineData
-                        }else {document.querySelector('#dgRodape' + id).innerHTML=lineData}
-                        
+                        }
+                        if (chave.formato.toUpperCase() == 'N') {
+                            lineData = parseFloat(lineData);
+                            document.querySelector('#dgRodape' + id).innerHTML=lineData
+                        }                        
+                        else {document.querySelector('#dgRodape' + id).innerHTML=lineData}
                     }
                 })
             })
