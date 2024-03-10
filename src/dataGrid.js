@@ -156,23 +156,43 @@ class DataGrid {
             var bntFuncao = document.createElement('DIV');
             bntFuncao.setAttribute('id', 'dgBtnsFuncao');
             bntFuncao.setAttribute('class', 'divBtnFuncao');
-            bntFuncao.setAttribute('style', 'display:flex ; flex-direction:row; margin-left : 5px;')
+            bntFuncao.setAttribute('style', 'display:flex ; flex-direction:row; margin-left : 5px; gap:5px')
             filtros.appendChild(bntFuncao);            
 
-            const btnJClose = document.createElement('ion-icon');
-            btnJClose.setAttribute('id', 'dgvJClose')
-            btnJClose.setAttribute('name', 'close-circle-outline')
-            btnJClose.setAttribute('style', ' display-flex ; right ;width : 30px; cursor: pointer; height : 30px; color : ' + dgDados.funcoes.titulo.cor)
-            bntFuncao.appendChild(btnJClose);
+            const xmlins="http://www.w3.org/2000/svg"
+
+            const btnJClose =  document.createElementNS(xmlins,"svg");
+            btnJClose.setAttributeNS(null,'width',27)
+            btnJClose.setAttributeNS(null,'heigth',27)
+            btnJClose.setAttributeNS(null,'id','BtnClose')
+            btnJClose.setAttributeNS(null,"viewBox","0 0 13 13")
+            btnJClose.style='cursor : pointer'
+            bntFuncao.appendChild(btnJClose);            
+            var path = document.createElementNS(xmlins, "path");
+            path.setAttributeNS(null, 'd', cloPath);
+            path.setAttributeNS(null,'fill',dgDados.funcoes.titulo.cor)
+            path.setAttributeNS(null,'width','40')
+            path.setAttributeNS(null, 'stroke-width', '1:3')
+            path.setAttributeNS(null,'height','0.5')
+            btnJClose.appendChild(path)
             btnJClose.addEventListener('click', (eve) => {
                 this.hideLista()
             })
 
-            const btnRefresch = document.createElement('SPAN');
-            btnRefresch.setAttribute('class','material-symbols-outlined')
-            btnRefresch.innerHTML='Refresh'
-            btnRefresch.style='color : '+dgDados.funcoes.titulo.cor+ '; font-size : 180%;font-weight: bolder;cursor : pointer'
+            const btnRefresch =  document.createElementNS(xmlins,"svg");
+            btnRefresch.setAttributeNS(null,'width',25)
+            btnRefresch.setAttributeNS(null,'heigth',25)
+            btnRefresch.setAttributeNS(null,'id','BtnReviw')
+            btnRefresch.setAttributeNS(null,"viewBox","0 0 13 13")
+            btnRefresch.style='cursor : pointer'
             bntFuncao.appendChild(btnRefresch);
+            var path = document.createElementNS(xmlins, "path");
+            path.setAttributeNS(null, 'd', revPath);
+            path.setAttributeNS(null,'fill',dgDados.funcoes.titulo.cor)
+            path.setAttributeNS(null,'width','40')
+            path.setAttributeNS(null, 'stroke-width', '1:3')
+            path.setAttributeNS(null,'height','0.5')
+            btnRefresch.appendChild(path)
             btnRefresch.addEventListener('click',(evt)=>{
                  this.criaLista(dgDados,dgData)                
             })
@@ -407,6 +427,10 @@ class DataGrid {
          this.criaLista(this.dgDados,this.dgData)
     }
 }
+
+const revPath=`M 6.557739 0.16743163 C 3.0283706 0.16743169 0.14831133 3.047491 0.14831135 6.5768593 C 0.14831172 10.106228 3.0283709 12.984737 6.557739 12.984737 C 9.7202354 12.984737 12.357959 10.672941 12.872599 7.6532793 L 11.202933 7.6532793 C 10.71772 9.7734977 8.8301219 11.344527 6.557739 11.344527 C 3.9146824 11.344527 1.7885215 9.2199158 1.7885212 6.5768593 C 1.7885212 3.9338026 3.9146822 1.8071249 6.557739 1.8071248 C 7.8233106 1.8071244 9.0251127 2.3113938 9.9120561 3.1915363 L 8.7178138 3.6540404 L 12.146545 5.3903684 L 12.630236 2.1921142 C 12.636136 2.1745302 12.621948 2.1408142 12.602848 2.1481892 L 11.546582 2.5574665 C 10.331455 1.0486855 8.4977106 0.16743097 6.557739 0.16743163 z `
+const cloPath = `m 9.3957838,2.7599818 0.7803222,0.7803225 c 0.02045,0.020446 0.02045,0.053366 0,0.073813 L 3.655199,10.135024 c -0.020446,0.02045 -0.053366,0.02045 -0.073812,0 L 2.8010644,9.3547012 c -0.020446,-0.020446 -0.020447,-0.053367 -7e-7,-0.073813 L 9.3219704,2.7599818 c 0.020446,-0.020446 0.053367,-0.020447 0.073813,0 z M 2.8010645,3.5403042 3.5813871,2.7599816 c 0.020446,-0.020446 0.053366,-0.020446 0.073813,4e-7 l 6.5209068,6.5209071 c 0.02044,0.020442 0.02044,0.053364 -2e-6,0.07381 L 9.3957823,10.135022 c -0.020446,0.02045 -0.053368,0.02045 -0.07381,2e-6 L 2.8010645,3.6141169 c -0.020446,-0.020446 -0.020446,-0.053367 0,-0.073813 z M 6.4609375,1.4290224e-5 C 2.8989132,1.4290224e-5 1.2707942e-8,2.8989275 1.2707942e-8,6.4609518 1.2707943e-8,10.022976 2.8989134,12.923843 6.4609381,12.923841 10.022963,12.923842 12.921876,10.022975 12.921862,6.4609374 12.921862,2.8989129 10.022949,0 6.4609249,0 Z m 0,1.099609309776 c 2.9675407,1e-7 5.3613285,2.3937875 5.3613285,5.3613281 0,2.9675406 -2.3937877,5.3613283 -5.3613289,5.3613273 -2.9675407,0 -5.3613277,-2.3937865 -5.3613277,-5.3613273 -1e-7,-2.9675406 2.3937874,-5.361328 5.3613281,-5.3613281 z`
+
 
 export { DataGrid }
 
